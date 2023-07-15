@@ -1,7 +1,11 @@
+import React from 'react'
 import './App.scss'
+import { useRoutes } from 'react-router-dom'
+import routes from './router'
 
-function App() {
-  return <div className="app">根组件</div>
+const App = () => {
+  const ele = useRoutes(routes)
+  return <div className="app">{ele}</div>
 }
 
 export default App
