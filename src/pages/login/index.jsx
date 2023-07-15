@@ -1,3 +1,5 @@
+import './index.scss'
+
 const Login = () => {
   return (
     <div>
