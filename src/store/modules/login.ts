@@ -5,22 +5,27 @@ import { Token } from '@/types/data'
 export interface loginState {
   token: Token
 }
+
+const initState: loginState = {
+  token: {
+    token: '',
+    refresh_token: ''
+  }
+}
+
 export const login = createSlice({
   name: 'login',
-  initialState: {
-    token: {
-      token: '',
-      refresh_token: ''
-    }
-  } as loginState,
+  initialState: initState,
   reducers: {
-    changeToken(state, action: PayloadAction<number | undefined>) {
-      state.token = action.payload
+    changeToken(state, action: PayloadAction<Token | undefined>) {
+      if (action.payload) {
+        state.token = action.payload
+      }
     }
   }
 })
 
-export const { add } = login.actions
+export const { changeToken } = login.actions
 
 export const asyncAction = (payload?: unknown): AppThunk => {
   return async (dispatch, getState) => {

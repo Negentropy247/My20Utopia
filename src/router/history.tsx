@@ -9,7 +9,7 @@ import { HistoryRouterProps, Router } from 'react-router-dom'
 // export const history = createBrowserHistory();
 // hash 模式
 // 1. 创建路由实例对象 => 作用：js中跳转页面
-export const history = createHashHistory()
+export const history = createHashHistory() as unknown as HistoryRouterProps['history']
 // 2. 创建路由函数组件 => 作用：包裹根组件,注册history
 export const HistoryRouter: FC<HistoryRouterProps> = ({ history, children }) => {
   const [state, setState] = useState({
