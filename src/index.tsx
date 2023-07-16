@@ -7,12 +7,14 @@ import { HashRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import store from './store'
 
+import { HistoryRouter, history } from './router/history'
+
 // 创建应用根实例
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <Provider store={store}>
-    <HashRouter>
+    <HistoryRouter history={history}>
       <App />
-    </HashRouter>
+    </HistoryRouter>
   </Provider>
 )

@@ -1,17 +1,21 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { AppThunk } from '..'
+import { AppThunk } from '../index'
+import { Token } from '@/types/data'
 
 export interface loginState {
-  count: number
+  token: Token
 }
 export const login = createSlice({
   name: 'login',
   initialState: {
-    count: 0
+    token: {
+      token: '',
+      refresh_token: ''
+    }
   } as loginState,
   reducers: {
-    add(state, action: PayloadAction<number | undefined>) {
-      state.count++
+    changeToken(state, action: PayloadAction<number | undefined>) {
+      state.token = action.payload
     }
   }
 })
@@ -20,7 +24,7 @@ export const { add } = login.actions
 
 export const asyncAction = (payload?: unknown): AppThunk => {
   return async (dispatch, getState) => {
-    dispatch(add())
+    // dispatch(add())
   }
 }
 
