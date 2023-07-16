@@ -9,9 +9,12 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.5",
     "antd-mobile": "^5.32.0",
+    "axios": "^1.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-redux": "^8.1.1",
     "react-router-dom": "^6.14.1"
   },
   "devDependencies": {
