@@ -1,13 +1,24 @@
 import { Button, NavBar, Form, Input } from "antd-mobile";
 import styles from "./index.module.scss";
+import { LoginFormData } from "@/types/data";
+import { useDispatch } from "react-redux";
+import { loginAction } from "@/store/modules/login";
+import { AppDispatch } from "@/store";
 
 const Login = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  // 提交登录
+  const onFinish = async (formData: LoginFormData) => {
+    try {
+      await dispatch(loginAction(formData));
+    } catch (error) {}
+  };
   return (
     <div className={styles.root}>
       <div className="login-form">
         <h2 className="title">账号登录</h2>
         {/* 表单 */}
-        <Form>
+        <Form onFinish={onFinish}>
           {/* 手机号 */}
           <Form.Item
             name="mobile"
