@@ -2,7 +2,7 @@
 // src/assets/styles/hairline.scss
 
 @mixin scale-hairline-common($color, $top, $right, $bottom, $left) {
-  content: '';
+  content: "";
   position: absolute;
   display: block;
   z-index: 1;
@@ -110,7 +110,7 @@
       border: none;
 
       &::before {
-        content: '';
+        content: "";
         position: absolute;
         left: 0;
         top: 0;
