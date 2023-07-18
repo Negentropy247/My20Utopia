@@ -1,7 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { AppThunk } from "../index";
-import { LoginFormData, Token } from "@/types/data";
-import request from "@/utils/request";
+import type { Token } from "@/types/data";
 
 export interface loginState {
   token: Token;
@@ -27,14 +25,5 @@ export const login = createSlice({
 });
 
 export const { changeToken } = login.actions;
-
-export const loginAction = (formData: LoginFormData): AppThunk => {
-  return async (dispatch, getState) => {
-    // dispatch(add())
-    // 1、发送请求获取token
-    const res = await request.post("/authorizations", formData);
-    // 2、把token储存到redux
-  };
-};
 
 export default login.reducer;

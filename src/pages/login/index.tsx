@@ -1,9 +1,9 @@
-import { Button, NavBar, Form, Input } from "antd-mobile";
-import styles from "./index.module.scss";
+import { Button, Form, Input } from "antd-mobile";
 import { LoginFormData } from "@/types/data";
 import { useDispatch } from "react-redux";
-import { loginAction } from "@/store/modules/login";
 import { AppDispatch } from "@/store";
+import styles from "./index.module.scss";
+import { loginAction } from "@/store/actions/login";
 
 const Login = () => {
   const dispatch = useDispatch<AppDispatch>();

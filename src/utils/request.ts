@@ -10,22 +10,19 @@ const request = axios.create({
 });
 
 // 请求拦截器
-request.interceptors.request
-  .use
-  // config => {
+request.interceptors.request.use(config => {
   // 获取token
-  // const {
-  //   login: { token }
-  // } = store.getState()
+  const {
+    login: { token },
+  } = store.getState();
 
-  // // 除了登录请求外，其他请求统一添加 token
-  // if (token.token) {
-  //   // ts中！操作符叫非空断言=》去掉null undefined 告诉ts类型是安全的
-  //   config.headers!.Authorization = `Bearer ${token.token}`
-  // }
-  // return config
-  // }
-  ();
+  // 除了登录请求外，其他请求统一添加 token
+  if (token.token) {
+    // ts中！操作符叫非空断言=》去掉null undefined 告诉ts类型是安全的
+    config.headers!.Authorization = `Bearer ${token.token}`;
+  }
+  return config;
+});
 
 // 响应拦截器
 request.interceptors.response.use(
