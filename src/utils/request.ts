@@ -1,5 +1,6 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import store from "@/store";
+
 import { history } from "@/router/history";
 import { Toast } from "antd-mobile";
 
