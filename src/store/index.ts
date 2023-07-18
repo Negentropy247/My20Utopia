@@ -9,7 +9,9 @@ const store = configureStore({
 
 // redux相关类型
 // 1、dispatch函数类型
-export type AppDispatch = typeof store.dispatch
+const AppDispatch = () => { type AppDispatch = typeof store.dispatch}
+export AppDispatch
+
 // 2、store状态类型
 export type RootStore = ReturnType<typeof store.getState>
 // 3、异步Action函数返回值类型
