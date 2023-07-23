@@ -1,16 +1,23 @@
-import { Button, Form, Input } from "antd-mobile";
+import { Button, Form, Input, Toast } from "antd-mobile";
 import { LoginFormData } from "@/types/data";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/store";
 import styles from "./index.module.scss";
 import { loginAction } from "@/store/actions/login";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const nav = useNavigate();
   // 提交登录
   const onFinish = async (formData: LoginFormData) => {
     try {
       await dispatch(loginAction(formData));
+      Toast.show({
+        icon: "success",
+        content: "登录成功",
+      });
+      nav("/");
     } catch (error) {}
   };
   return (
