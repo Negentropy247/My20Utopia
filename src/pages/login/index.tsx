@@ -5,6 +5,8 @@ import { AppDispatch } from "@/store";
 import styles from "./index.module.scss";
 import { loginAction } from "@/store/actions/login";
 import { useNavigate } from "react-router-dom";
+// axios提供的错误类型
+import { AxiosError } from "axios";
 
 const Login = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -18,7 +20,13 @@ const Login = () => {
         content: "登录成功",
       });
       nav("/");
-    } catch (error) {}
+    } catch (error) {
+      const _error = error as AxiosError<{ message: string }>;
+      Toast.show({
+        icon: "fail",
+        content: _error.response?.data.message,
+      });
+    }
   };
   return (
     <div className={styles.root}>
