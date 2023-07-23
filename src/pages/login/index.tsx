@@ -11,6 +11,8 @@ import { AxiosError } from "axios";
 const Login = () => {
   const dispatch = useDispatch<AppDispatch>();
   const nav = useNavigate();
+  // 获取表单实例
+  const [form] = Form.useForm();
   // 提交登录
   const onFinish = async (formData: LoginFormData) => {
     try {
@@ -33,7 +35,7 @@ const Login = () => {
       <div className="login-form">
         <h2 className="title">账号登录</h2>
         {/* 表单 */}
-        <Form onFinish={onFinish}>
+        <Form form={form} onFinish={onFinish}>
           {/* 手机号 */}
           <Form.Item
             name="mobile"
@@ -62,10 +64,21 @@ const Login = () => {
           </Form.Item>
           {/* 提交按钮 */}
           {/* noStyle 表示不提供 Form.Item 自带的样式 */}
-          <Form.Item noStyle>
-            <Button block type="submit" color="primary" className="login-submit">
-              登 录
-            </Button>
+          <Form.Item shouldUpdate noStyle>
+            {() => (
+              <Button
+                block
+                type="submit"
+                color="primary"
+                className="login-submit"
+                disabled={
+                  !form.isFieldTouched(true) ||
+                  !!form.getFieldsError().filter(({ errors }) => errors.length).length
+                }
+              >
+                登 录
+              </Button>
+            )}
           </Form.Item>
         </Form>
       </div>
