@@ -1,4 +1,4 @@
-import { Button, Form, Input, Toast } from "antd-mobile";
+import { Button, Form, Input, InputRef, Toast } from "antd-mobile";
 import { LoginFormData } from "@/types/data";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/store";
@@ -7,13 +7,16 @@ import { loginAction } from "@/store/actions/login";
 import { useNavigate } from "react-router-dom";
 // axios提供的错误类型
 import { AxiosError } from "axios";
+import { useRef } from "react";
 
 const Login = () => {
   const dispatch = useDispatch<AppDispatch>();
   const nav = useNavigate();
   // 获取表单实例
   const [form] = Form.useForm();
-  // 提交登录
+  // 获取手机号输入框实例对象
+  const mobileRef = useRef<InputRef>(null);
+  // 1、提交登录
   const onFinish = async (formData: LoginFormData) => {
     try {
       await dispatch(loginAction(formData));
@@ -29,6 +32,24 @@ const Login = () => {
         content: _error.response?.data.message,
       });
     }
+  };
+  // 2、发送验证码
+  const sendCode = () => {
+    /**
+     * 1、校验手机号格式（是否空、是否正确）-----错误的话，让手机号输入框获取焦点
+     *   通过getFieldValue  getFielError 获取表单name值和name格式错误
+     * 2、输入正确：调用后接口（参数：手机号），调用运营商接口，发送短信
+     * 3、用户手机号收到短信，填写后，进行登录
+     */
+    // 获取手机号
+    const mobile = form.getFieldValue("mobile") || "";
+    // 获取手机号输入格式错误
+    const isError = form.getFieldError("mobile").length > 0;
+    if (!mobile.trim() || isError) {
+      mobileRef.current!.focus();
+      return;
+    }
+    // 发短信
   };
   return (
     <div className={styles.root}>
@@ -48,7 +69,7 @@ const Login = () => {
             ]}
             className="login-item"
           >
-            <Input placeholder="请输入手机号" />
+            <Input ref={mobileRef} placeholder="请输入手机号" />
           </Form.Item>
           {/* 验证码 */}
           <Form.Item
@@ -58,7 +79,11 @@ const Login = () => {
               { required: true, message: "请输入验证码" },
             ]}
             className="login-item"
-            extra={<span className="code-extra">发送验证码</span>}
+            extra={
+              <span onClick={sendCode} className="code-extra">
+                发送验证码
+              </span>
+            }
           >
             <Input placeholder="请输入验证码" autoComplete="off" />
           </Form.Item>
