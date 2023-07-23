@@ -72,7 +72,7 @@ const Login = () => {
                 color="primary"
                 className="login-submit"
                 disabled={
-                  !form.isFieldTouched(true) ||
+                  !form.isFieldsTouched(true) ||
                   !!form.getFieldsError().filter(({ errors }) => errors.length).length
                 }
               >
