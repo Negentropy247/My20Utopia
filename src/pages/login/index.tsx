@@ -7,7 +7,7 @@ import { loginAction } from "@/store/actions/login";
 import { useNavigate } from "react-router-dom";
 // axios提供的错误类型
 import { AxiosError } from "axios";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getCodeApi } from "@/api/login";
 import { setInterval } from "timers/promises";
 
@@ -37,6 +37,8 @@ const Login = () => {
   };
   // 2、发送验证码
   const [count, setCount] = useState(0);
+  // 储存定时器id
+  const timeId = useRef(0);
   const sendCode = async () => {
     /**
      * 1、校验手机号格式（是否空、是否正确）-----错误的话，让手机号输入框获取焦点
@@ -67,6 +69,17 @@ const Login = () => {
       }, 1000);
     } catch (error) {}
   };
+  // 清理定时器倒计时--1、count=0  2、组件销毁
+  useEffect(() => {
+    if (count === 0) {
+      clearInterval(timeId.current);
+    }
+  }, [count]);
+  useEffect(() => {
+    return () => {
+      clearInterval(timeId.current);
+    };
+  }, []);
   return (
     <div className={styles.root}>
       <div className="login-form">
