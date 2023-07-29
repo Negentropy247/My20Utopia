@@ -7,8 +7,9 @@ import { loginAction } from "@/store/actions/login";
 import { useNavigate } from "react-router-dom";
 // axios提供的错误类型
 import { AxiosError } from "axios";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { getCodeApi } from "@/api/login";
+import { setInterval } from "timers/promises";
 
 const Login = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -35,6 +36,7 @@ const Login = () => {
     }
   };
   // 2、发送验证码
+  const [count, setCount] = useState(0);
   const sendCode = async () => {
     /**
      * 1、校验手机号格式（是否空、是否正确）-----错误的话，让手机号输入框获取焦点
@@ -53,6 +55,16 @@ const Login = () => {
     // 发短信
     try {
       await getCodeApi(mobile);
+      /**
+       * 开启倒计时流程：
+       * 1、倒计时状态：60s
+       * 2、== 发送短信后：立即开启倒计时 ==
+       * 3、倒计时状态等于0：清楚定时器
+       */
+      setCount(60);
+      window.setInterval(() => {
+        setCount(ct => ct - 1);
+      }, 1000);
     } catch (error) {}
   };
   return (
@@ -84,8 +96,8 @@ const Login = () => {
             ]}
             className="login-item"
             extra={
-              <span onClick={sendCode} className="code-extra">
-                发送验证码
+              <span onClick={count === 0 ? sendCode : undefined} className="code-extra">
+                {count === 0 ? "发送验证码" : `${count}秒后重新发送`}
               </span>
             }
           >
