@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 // axios提供的错误类型
 import { AxiosError } from "axios";
 import { useRef } from "react";
+import { getCodeApi } from "@/api/login";
 
 const Login = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -34,7 +35,7 @@ const Login = () => {
     }
   };
   // 2、发送验证码
-  const sendCode = () => {
+  const sendCode = async () => {
     /**
      * 1、校验手机号格式（是否空、是否正确）-----错误的话，让手机号输入框获取焦点
      *   通过getFieldValue  getFielError 获取表单name值和name格式错误
@@ -50,6 +51,9 @@ const Login = () => {
       return;
     }
     // 发短信
+    try {
+      await getCodeApi(mobile);
+    } catch (error) {}
   };
   return (
     <div className={styles.root}>
