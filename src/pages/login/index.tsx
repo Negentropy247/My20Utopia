@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 import { useEffect, useRef, useState } from "react";
 import { getCodeApi } from "@/api/login";
-import { setInterval } from "timers/promises";
 
 const Login = () => {
   const dispatch = useDispatch<AppDispatch>();
