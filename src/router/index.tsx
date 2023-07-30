@@ -18,7 +18,7 @@ const routes = [
         element: <Home />,
       },
       {
-        path: "/qusetion",
+        path: "/question",
         element: <Question />,
       },
       {

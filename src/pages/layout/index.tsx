@@ -1,8 +1,8 @@
-import { Route } from "react-router-dom";
+import { Route, useLocation, useNavigate } from "react-router-dom";
 import { TabBar } from "antd-mobile";
 import styles from "./index.module.scss";
-import Icon from "@/components/icon";
 import { Outlet } from "react-router-dom";
+import Icon from "@/compontents/icon";
 
 // 菜单数据
 const tabs = [
@@ -13,13 +13,19 @@ const tabs = [
 ];
 
 const Layout = () => {
+  const nav = useNavigate();
+  const location = useLocation();
+  // 点击切换子页面
+  const changePath = (path: string) => {
+    nav(path);
+  };
   return (
     <div className={styles.root}>
       {/* 子路由挂载点 */}
       <Outlet />
 
       {/* 底部菜单 */}
-      <TabBar className="tab-bar">
+      <TabBar activeKey={location.pathname} onChange={changePath} className="tab-bar">
         {tabs.map(item => (
           <TabBar.Item
             key={item.path}
