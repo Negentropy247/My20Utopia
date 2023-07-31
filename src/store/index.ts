@@ -1,9 +1,11 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import login from "./reducers/login";
+import login from "./modules/login";
+import profile from "./modules/profile";
 
 const store = configureStore({
   reducer: {
     login,
+    profile,
   },
 });
 

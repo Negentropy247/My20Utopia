@@ -1,7 +1,7 @@
 import { LoginFormData, LoginResponse } from "@/types/data";
 import { AppThunk } from "..";
 import request from "@/utils/request";
-import { changeToken } from "../reducers/login";
+import { changeToken } from "../modules/login";
 
 export const loginAction = (formData: LoginFormData): AppThunk => {
   return async (dispatch, getState) => {
