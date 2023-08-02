@@ -3,18 +3,22 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "./index.module.scss";
 import Icon from "@/compontents/icon";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/store";
 import { getUserAction } from "@/store/actions/profile";
 
 const Profile = () => {
   const history = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
-  // 1\获取登录用户信息
   useEffect(() => {
+    // 1\获取登录用户信息
     dispatch(getUserAction());
   }, []);
+  // 2、从redux获取用户信息
+  const {
+    user: { photo, name, like_count, follow_count, fans_count, art_count },
+  } = useSelector((state: RootState) => state.profile);
 
   return (
     <div className={styles.root}>
@@ -22,9 +26,11 @@ const Profile = () => {
         {/* 个人信息 */}
         <div className="user-info">
           <div className="avatar">
-            <img src={"http://toutiao.itheima.net/images/user_head.jpg"} alt="" />
+            {/* 用户头像 */}
+            <img src={photo || "http://toutiao.itheima.net/images/user_head.jpg"} alt="" />
           </div>
-          <div className="user-name">黑马先锋</div>
+          {/* 用户名 */}
+          <div className="user-name">{name}</div>
           <Link to="/profile/edit">
             个人信息 <Icon type="iconbtn_right" />
           </Link>
@@ -41,19 +47,19 @@ const Profile = () => {
         {/* 动态 - 对应的这一行 */}
         <div className="count-list">
           <div className="count-item">
-            <p>1</p>
+            <p>{art_count}</p>
             <p>动态</p>
           </div>
           <div className="count-item">
-            <p>9</p>
+            <p>{follow_count}</p>
             <p>关注</p>
           </div>
           <div className="count-item">
-            <p>99</p>
+            <p>{fans_count}</p>
             <p>粉丝</p>
           </div>
           <div className="count-item">
-            <p>200</p>
+            <p>{like_count}</p>
             <p>被赞</p>
           </div>
         </div>
