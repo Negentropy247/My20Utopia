@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store";
 import { getUserAction } from "@/store/actions/profile";
+import { profileState } from "@/store/modules/profile";
 
 const Profile = () => {
   const history = useNavigate();
@@ -16,9 +17,15 @@ const Profile = () => {
     dispatch(getUserAction());
   }, []);
   // 2、从redux获取用户信息
+  // 写法一：类型注解
+  // const {
+  //   user: { photo, name, like_count, follow_count, fans_count, art_count },
+  // } = useSelector((state: RootState) => state.profile);
+  // 写法二：泛型
+  // 写法一：类型注解
   const {
     user: { photo, name, like_count, follow_count, fans_count, art_count },
-  } = useSelector((state: RootState) => state.profile);
+  } = useSelector<RootState, profileState>(state => state.profile);
 
   return (
     <div className={styles.root}>
