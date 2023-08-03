@@ -13,10 +13,13 @@ export type LoginFormData = {
 };
 
 // 登录接口返回值的类型
-export type LoginResponse = {
-  data: Token;
+// 后台返回数据的泛型工具
+export type ApiResponse<Data> = {
+  data: Data;
   message: string;
 };
+
+export type LoginResponse = ApiResponse<Token>;
 
 // 我的 - 个人信息
 export type User = {
@@ -28,3 +31,6 @@ export type User = {
   fans_count: number;
   like_count: number;
 };
+
+// 登录后用户数据类型
+export type UserResponse = ApiResponse<User>;
